@@ -1,5 +1,9 @@
+import 'package:expense_tracker/widgets/custom_text_field.dart';
+import 'package:expense_tracker/widgets/field_label.dart';
 import 'package:flutter/material.dart';
-import '../widgets/custom_text_field.dart';
+
+import '../widgets/currency_dropdown.dart';
+import '../widgets/terms_checkbox.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -9,463 +13,322 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
-  bool _acceptedTerms = false;
+  final TextEditingController fullNameController = TextEditingController();
 
-  String _currency = 'USD - US Dollar';
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
+  bool obscurePassword = true;
+  bool obscureConfirmPassword = true;
+  bool termsAccepted = false;
+
+  String selectedCurrency = 'USD (\$)';
+
+  final List<String> currencies = [
+    'USD (\$)',
+    'INR (₹)',
+    'EUR (€)',
+    'GBP (£)',
+    'AED (د.إ)',
+  ];
+
+  void createAccount() {
+    FocusScope.of(context).unfocus();
+
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    if (!termsAccepted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Please agree to the Terms of Service and Privacy Policy.',
+          ),
+        ),
+      );
+      return;
+    }
+
+    // Connect registration API / Supabase here.
+
+    debugPrint('Name: ${fullNameController.text}');
+    debugPrint('Email: ${emailController.text}');
+    debugPrint('Currency: $selectedCurrency');
+  }
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
+    fullNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
-  }
-
-  void _createAccount() {
-    final name = _nameController.text.trim();
-    final email = _emailController.text.trim();
-    final password = _passwordController.text;
-    final confirmPassword = _confirmPasswordController.text;
-
-    if (name.isEmpty ||
-        email.isEmpty ||
-        password.isEmpty ||
-        confirmPassword.isEmpty) {
-      _showMessage('Please fill in all fields.');
-      return;
-    }
-
-    if (password != confirmPassword) {
-      _showMessage('Passwords do not match.');
-      return;
-    }
-
-    if (!_acceptedTerms) {
-      _showMessage('Please agree to the Terms of Service and Privacy Policy.');
-      return;
-    }
-
-    // TODO:
-    // Connect Supabase signUp() here.
-
-    _showMessage('Creating account...');
-  }
-
-  void _showMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7FAFB),
-
-      // No bottomNavigationBar here.
+      backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(16, 20, 16, 30),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 28),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(48),
-              border: Border.all(
-                color: const Color(0xFFBCC5C8),
-                width: 1,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Logo
-                Center(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final width = constraints.maxWidth;
+            final height = constraints.maxHeight;
+            final isSmallHeight = height < 700;
+            final isSmallWidth = width < 360;
+
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 11,
+                  vertical: 8,
+                ),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 500),
                   child: Container(
-                    width: 64,
-                    height: 64,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF0C6774),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0x30000000),
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
+                    width: double.infinity,
+                    height: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isSmallWidth ? 14 : 18,
+                      vertical: isSmallHeight ? 12 : 20,
                     ),
-                    child: const Icon(
-                      Icons.account_balance_wallet_outlined,
+                    decoration: BoxDecoration(
                       color: Colors.white,
-                      size: 31,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 14),
-
-                // FinFlow
-                const Center(
-                  child: Text(
-                    'FinFlow',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF007D78),
-                      letterSpacing: -0.7,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 7),
-
-                // Subtitle
-                const Center(
-                  child: Text(
-                    'Create your account to start managing\n'
-                        'your finances.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      height: 1.45,
-                      color: Color(0xFF4E585B),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 25),
-
-                // Full Name
-                _label('Full Name'),
-
-                const SizedBox(height: 6),
-
-                CustomTextField(
-                  controller: _nameController,
-                  hintText: 'John Doe',
-                  icon: Icons.person_outline,
-                  keyboardType: TextInputType.name,
-                ),
-
-                const SizedBox(height: 17),
-
-                // Email
-                _label('Email Address'),
-
-                const SizedBox(height: 6),
-
-                CustomTextField(
-                  controller: _emailController,
-                  hintText: 'john@example.com',
-                  icon: Icons.mail_outline,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-
-                const SizedBox(height: 17),
-
-                // Password
-                _label('Password'),
-
-                const SizedBox(height: 6),
-
-                CustomTextField(
-                  controller: _passwordController,
-                  hintText: '••••••••',
-                  icon: Icons.lock_outline,
-                  obscureText: _obscurePassword,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _obscurePassword = !_obscurePassword;
-                      });
-                    },
-                    icon: Icon(
-                      _obscurePassword
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined,
-                      size: 20,
-                      color: const Color(0xFF758084),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 17),
-
-                // Confirm Password
-                _label('Confirm Password'),
-
-                const SizedBox(height: 6),
-
-                CustomTextField(
-                  controller: _confirmPasswordController,
-                  hintText: '••••••••',
-                  icon: Icons.lock_reset_outlined,
-                  obscureText: _obscureConfirmPassword,
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _obscureConfirmPassword =
-                        !_obscureConfirmPassword;
-                      });
-                    },
-                    icon: Icon(
-                      _obscureConfirmPassword
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined,
-                      size: 20,
-                      color: const Color(0xFF758084),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(height: 17),
-
-                // Currency
-                _label('Primary Currency'),
-
-                const SizedBox(height: 6),
-
-                _buildCurrencyDropdown(),
-
-                const SizedBox(height: 20),
-
-                // Terms
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: Checkbox(
-                        value: _acceptedTerms,
-                        onChanged: (value) {
-                          setState(() {
-                            _acceptedTerms = value ?? false;
-                          });
-                        },
-                        shape: const CircleBorder(),
-                        side: const BorderSide(
-                          color: Color(0xFFB8C1C4),
-                        ),
-                        activeColor: const Color(0xFF007D78),
+                      borderRadius: BorderRadius.circular(35),
+                      border: Border.all(
+                        color: const Color(0xFF91AEB1),
+                        width: 0.8,
                       ),
                     ),
-
-                    const SizedBox(width: 8),
-
-                    Expanded(
-                      child: Wrap(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'I agree to the ',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF606A6E),
-                              height: 1.5,
-                            ),
-                          ),
+                          // Dynamic space at top
+                          const Spacer(flex: 1),
 
-                          GestureDetector(
-                            onTap: () {
-                              // TODO: Terms of Service
-                            },
-                            child: const Text(
-                              'Terms of Service',
+                          // TITLE
+                          Center(
+                            child: Text(
+                              'Create Account',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF007D78),
-                                height: 1.5,
+                                fontSize: isSmallWidth ? 24 : 28,
+                                fontWeight: FontWeight.w700,
+                                color: const Color(0xFF003D46),
                               ),
                             ),
                           ),
 
-                          const Text(
-                            ' and ',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF606A6E),
-                              height: 1.5,
-                            ),
-                          ),
+                          const SizedBox(height: 4),
 
-                          GestureDetector(
-                            onTap: () {
-                              // TODO: Privacy Policy
-                            },
-                            child: const Text(
-                              'Privacy Policy',
+                          const Center(
+                            child: Text(
+                              'Join FinCorp Solutions today.',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF007D78),
-                                height: 1.5,
+                                fontSize: 13,
+                                color: Color(0xFF50595B),
                               ),
                             ),
                           ),
 
-                          const Text(
-                            '.',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Color(0xFF606A6E),
+                          const Spacer(flex: 1),
+
+                          // FULL NAME
+                          const FieldLabel(text: 'Full Name'),
+                          const SizedBox(height: 4),
+                          CustomTextField(
+                            controller: fullNameController,
+                            hintText: 'Shree Ram',
+                            prefixIcon: Icons.person_outline,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Please enter your full name';
+                              }
+                              return null;
+                            },
+                          ),
+
+                          const Spacer(flex: 1),
+
+                          // EMAIL
+                          const FieldLabel(text: 'Email Address'),
+                          const SizedBox(height: 4),
+                          CustomTextField(
+                            controller: emailController,
+                            hintText: 'shree.ram@example.com',
+                            prefixIcon: Icons.email,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.trim().isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              final emailRegex = RegExp(
+                                r'^[^@\s]+@[^@\s]+\.[^@\s]+$',
+                              );
+                              if (!emailRegex.hasMatch(value.trim())) {
+                                return 'Please enter a valid email';
+                              }
+                              return null;
+                            },
+                          ),
+
+                          const Spacer(flex: 1),
+
+                          // PASSWORD
+                          const FieldLabel(text: 'Password'),
+                          const SizedBox(height: 4),
+                          CustomTextField(
+                            controller: passwordController,
+                            hintText: '••••••••',
+                            prefixIcon: Icons.lock_outline,
+                            obscureText: obscurePassword,
+                            onToggleVisibility: () {
+                              setState(() {
+                                obscurePassword = !obscurePassword;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter a password';
+                              }
+                              if (value.length < 8) {
+                                return 'Password must be at least 8 characters';
+                              }
+                              return null;
+                            },
+                          ),
+
+                          const Spacer(flex: 1),
+
+                          // CONFIRM PASSWORD
+                          const FieldLabel(text: 'Confirm Password'),
+                          const SizedBox(height: 4),
+                          CustomTextField(
+                            controller: confirmPasswordController,
+                            hintText: '••••••••',
+                            prefixIcon: Icons.lock_reset_outlined,
+                            obscureText: obscureConfirmPassword,
+                            onToggleVisibility: () {
+                              setState(() {
+                                obscureConfirmPassword =
+                                    !obscureConfirmPassword;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please confirm your password';
+                              }
+                              if (value != passwordController.text) {
+                                return 'Passwords do not match';
+                              }
+                              return null;
+                            },
+                          ),
+
+                          const Spacer(flex: 1),
+
+                          // CURRENCY (Duplicates removed)
+                          const FieldLabel(text: 'Primary Currency'),
+                          const SizedBox(height: 4),
+                          CurrencyDropdown(
+                            selectedCurrency: selectedCurrency,
+                            currencies: currencies,
+                            onChanged: (value) {
+                              if (value == null) return;
+                              setState(() {
+                                selectedCurrency = value;
+                              });
+                            },
+                          ),
+
+                          const Spacer(flex: 1),
+
+                          // TERMS
+                          TermsCheckbox(
+                            value: termsAccepted,
+                            onChanged: (value) {
+                              setState(() {
+                                termsAccepted = value ?? false;
+                              });
+                            },
+                            onTermsTap: () {},
+                            onPrivacyTap: () {},
+                          ),
+
+                          const Spacer(flex: 1),
+
+                          // CREATE ACCOUNT BUTTON
+                          SizedBox(
+                            width: double.infinity,
+                            height: 42,
+                            child: ElevatedButton(
+                              onPressed: createAccount,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF003D46),
+                                foregroundColor: Colors.white,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                              ),
+                              child: const Text(
+                                'Create Account',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                             ),
                           ),
+
+                          const Spacer(flex: 1),
+
+                          // SIGN IN
+                          Center(
+                            child: Wrap(
+                              alignment: WrapAlignment.center,
+                              children: [
+                                const Text(
+                                  'Already have an account? ',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Color(0xFF50595B),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {},
+                                  child: const Text(
+                                    'Sign In',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFF004F57),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const Spacer(flex: 1),
                         ],
                       ),
                     ),
-                  ],
-                ),
-
-                const SizedBox(height: 22),
-
-                // Create Account
-                SizedBox(
-                  width: double.infinity,
-                  height: 58,
-                  child: ElevatedButton(
-                    onPressed: _createAccount,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF0C6774),
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Create Account',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Icon(
-                          Icons.arrow_forward,
-                          size: 22,
-                        ),
-                      ],
-                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _label(String text) {
-    return Text(
-      text,
-      style: const TextStyle(
-        fontSize: 13,
-        fontWeight: FontWeight.w500,
-        color: Color(0xFF202629),
-      ),
-    );
-  }
-
-  Widget _buildCurrencyDropdown() {
-    return Container(
-      height: 42,
-      decoration: BoxDecoration(
-        color: const Color(0xFFF7F9FA),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: const Color(0xFFBFC7C9),
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: _currency,
-          isExpanded: true,
-          icon: const Icon(
-            Icons.keyboard_arrow_down,
-            color: Color(0xFF758084),
-          ),
-          style: const TextStyle(
-            fontSize: 15,
-            color: Color(0xFF303638),
-          ),
-          items: const [
-            DropdownMenuItem(
-              value: 'USD - US Dollar',
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.account_balance_wallet_outlined,
-                    size: 21,
-                    color: Color(0xFF758084),
-                  ),
-                  SizedBox(width: 8),
-                  Text('USD - US Dollar'),
-                ],
               ),
-            ),
-            DropdownMenuItem(
-              value: 'INR - Indian Rupee',
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.account_balance_wallet_outlined,
-                    size: 21,
-                    color: Color(0xFF758084),
-                  ),
-                  SizedBox(width: 8),
-                  Text('INR - Indian Rupee'),
-                ],
-              ),
-            ),
-            DropdownMenuItem(
-              value: 'EUR - Euro',
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.account_balance_wallet_outlined,
-                    size: 21,
-                    color: Color(0xFF758084),
-                  ),
-                  SizedBox(width: 8),
-                  Text('EUR - Euro'),
-                ],
-              ),
-            ),
-            DropdownMenuItem(
-              value: 'GBP - British Pound',
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.account_balance_wallet_outlined,
-                    size: 21,
-                    color: Color(0xFF758084),
-                  ),
-                  SizedBox(width: 8),
-                  Text('GBP - British Pound'),
-                ],
-              ),
-            ),
-          ],
-          onChanged: (value) {
-            if (value == null) return;
-
-            setState(() {
-              _currency = value;
-            });
+            );
           },
         ),
       ),

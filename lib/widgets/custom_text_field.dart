@@ -3,78 +3,81 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
-  final IconData icon;
-  final TextInputType? keyboardType;
+  final IconData prefixIcon;
+  final TextInputType keyboardType;
   final bool obscureText;
-  final Widget? suffixIcon;
+  final VoidCallback? onToggleVisibility;
+  final String? Function(String?)? validator;
 
   const CustomTextField({
     super.key,
     required this.controller,
     required this.hintText,
-    required this.icon,
-    this.keyboardType,
+    required this.prefixIcon,
+    this.keyboardType = TextInputType.text,
     this.obscureText = false,
-    this.suffixIcon,
+    this.onToggleVisibility,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 42,
-      child: TextField(
-        controller: controller,
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        style: const TextStyle(
-          fontSize: 15,
-          color: Color(0xFF303638),
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      obscureText: obscureText,
+      validator: validator,
+      style: const TextStyle(fontSize: 14, color: Color(0xFF263238)),
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: const TextStyle(color: Color(0xFFB8C0C2), fontSize: 14),
+
+        prefixIcon: Icon(prefixIcon, size: 20, color: Color(0xFF738083)),
+
+        suffixIcon: onToggleVisibility != null
+            ? IconButton(
+                onPressed: onToggleVisibility,
+                icon: Icon(
+                  obscureText
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  size: 20,
+                  color: const Color(0xFF738083),
+                ),
+              )
+            : null,
+
+        filled: true,
+        fillColor: const Color(0xFFF7F9F9),
+
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 15,
         ),
-        decoration: InputDecoration(
-          isDense: true,
-          hintText: hintText,
-          hintStyle: const TextStyle(
-            fontSize: 15,
-            color: Color(0xFF4F585B),
-          ),
 
-          prefixIcon: Icon(
-            icon,
-            size: 21,
-            color: Color(0xFFB2BCBF),
-          ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: BorderSide.none,
+        ),
 
-          suffixIcon: suffixIcon,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: BorderSide.none,
+        ),
 
-          filled: true,
-          fillColor: const Color(0xFFF7F9FA),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(22),
+          borderSide: const BorderSide(color: Color(0xFF004F57), width: 1.2),
+        ),
 
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 14,
-            vertical: 8,
-          ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.redAccent),
+        ),
 
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
-            borderSide: const BorderSide(
-              color: Color(0xFFBFC7C9),
-            ),
-          ),
-
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
-            borderSide: const BorderSide(
-              color: Color(0xFFBFC7C9),
-            ),
-          ),
-
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
-            borderSide: const BorderSide(
-              color: Color(0xFF0C6774),
-              width: 1.5,
-            ),
-          ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.redAccent),
         ),
       ),
     );

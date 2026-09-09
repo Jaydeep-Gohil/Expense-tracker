@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'screens/login_screen.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -25,16 +23,8 @@ class ExpenseTrackerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Expense Tracker',
-
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color(0xFFF7FAFB),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF007D78),
-        ),
-      ),
-
+      title: 'FinCorp Solutions',
+      theme: ThemeData(fontFamily: 'Roboto', useMaterial3: true),
       home: const RegisterScreen(),
     );
   }
