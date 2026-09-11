@@ -1,3 +1,4 @@
+import 'package:expense_tracker/constants/color.dart';
 import 'package:expense_tracker/screens/login_screen.dart';
 import 'package:expense_tracker/widgets/custom_text_field.dart';
 import 'package:expense_tracker/widgets/field_label.dart';
@@ -126,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: TextStyle(
                                 fontSize: isSmallWidth ? 24 : 28,
                                 fontWeight: FontWeight.w700,
-                                color: const Color(0xFF003D46),
+                                color: AppColor.primary,
                               ),
                             ),
                           ),
@@ -139,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Color(0xFF50595B),
+                                color: AppColor.secondary,
                               ),
                             ),
                           ),
@@ -240,11 +241,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                           const Spacer(flex: 1),
 
-<<<<<<< HEAD
-                          // CURRENCY 
-=======
                           // CURRENCY
->>>>>>> 32c5836 (feat: Implement login screen with form validation and navigation)
                           const FieldLabel(text: 'Primary Currency'),
                           const SizedBox(height: 4),
                           CurrencyDropdown(
@@ -290,12 +287,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   'Already have an account? ',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: Color(0xFF50595B),
+                                    color: AppColor.secondary,
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginScreen(),
+                                      ),
+                                    );
                                   },
                                   child: const Text(
                                     'Sign In',

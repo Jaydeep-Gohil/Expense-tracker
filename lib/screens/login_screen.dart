@@ -1,3 +1,4 @@
+import 'package:expense_tracker/constants/color.dart';
 import 'package:expense_tracker/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool obscurePassword = true;
 
-  void handleLogin() {
+  void Login() {
     FocusScope.of(context).unfocus();
 
     if (!_formKey.currentState!.validate()) {
@@ -89,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               style: TextStyle(
                                 fontSize: isSmallWidth ? 24 : 28,
                                 fontWeight: FontWeight.w700,
-                                color: const Color(0xFF003D46),
+                                color: AppColor.primary,
                               ),
                             ),
                           ),
@@ -102,12 +103,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Color(0xFF50595B),
+                                color: AppColor.secondary,
                               ),
                             ),
                           ),
 
-                          const SizedBox(height: 50,),
+                          const SizedBox(height: 50),
 
                           // EMAIL
                           const FieldLabel(text: 'Email Address'),
@@ -160,12 +161,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 16),
 
                           // SIGN IN BUTTON
-                          CustomButton(
-                            text: 'Sign In',
-                            onPressed: handleLogin,
-                          ),
+                          CustomButton(text: 'Sign In', onPressed: Login),
 
-                          const  SizedBox(height: 35),
+                          const SizedBox(height: 35),
 
                           // REGISTER REDIRECT
                           Center(
@@ -176,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   "Don't have an account? ",
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: Color(0xFF50595B),
+                                    color: AppColor.secondary,
                                   ),
                                 ),
                                 GestureDetector(
@@ -185,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                        const RegisterScreen(),
+                                            const RegisterScreen(),
                                       ),
                                     );
                                   },
@@ -194,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w500,
-                                      color: Color(0xFF004F57),
+                                      color: AppColor.primary,
                                     ),
                                   ),
                                 ),
