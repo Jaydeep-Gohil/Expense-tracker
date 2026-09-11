@@ -1,8 +1,10 @@
+import 'package:expense_tracker/screens/login_screen.dart';
 import 'package:expense_tracker/widgets/custom_text_field.dart';
 import 'package:expense_tracker/widgets/field_label.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/currency_dropdown.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/terms_checkbox.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -238,7 +240,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                           const Spacer(flex: 1),
 
+<<<<<<< HEAD
                           // CURRENCY 
+=======
+                          // CURRENCY
+>>>>>>> 32c5836 (feat: Implement login screen with form validation and navigation)
                           const FieldLabel(text: 'Primary Currency'),
                           const SizedBox(height: 4),
                           CurrencyDropdown(
@@ -269,29 +275,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const Spacer(flex: 1),
 
                           // CREATE ACCOUNT BUTTON
-                          SizedBox(
-                            width: double.infinity,
-                            height: 42,
-                            child: ElevatedButton(
-                              onPressed: createAccount,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF003D46),
-                                foregroundColor: Colors.white,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                              ),
-                              child: const Text(
-                                'Create Account',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
+                          CustomButton(
+                            text: 'Create Account',
+                            onPressed: createAccount,
                           ),
-
                           const Spacer(flex: 1),
 
                           // SIGN IN
@@ -307,7 +294,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                  },
                                   child: const Text(
                                     'Sign In',
                                     style: TextStyle(

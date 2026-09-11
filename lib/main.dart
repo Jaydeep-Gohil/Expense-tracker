@@ -1,3 +1,4 @@
+import 'package:expense_tracker/screens/login_screen.dart';
 import 'package:expense_tracker/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -25,7 +26,7 @@ class ExpenseTrackerApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'FinCorp Solutions',
       theme: ThemeData(fontFamily: 'Roboto', useMaterial3: true),
-      home: const RegisterScreen(),
+      home: LoginScreen(),
     );
   }
 }
