@@ -4,6 +4,7 @@ import '../constants/color.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/field_label.dart';
+
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
 
@@ -53,35 +54,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     child: Form(
                       // key: _formKey,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 60,),
-                          Center(
-                            child: Container(
-                              width: 80,
-                              height: 80,
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF003D46),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Stack(
-                                alignment: Alignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.refresh,
-                                    color: Color(0xFF7CCCD4),
-                                    size: 50,
-                                  ),
-                                  Icon(
-                                    Icons.lock,
-                                    color: Color(0xFF7CCCD4),
-                                    size: 18,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height:15,),
                           // TITLE
                           Center(
                             child: Text(
@@ -95,7 +70,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             ),
                           ),
 
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 8),
 
                           const Center(
                             child: Text(
@@ -108,7 +83,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             ),
                           ),
 
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 32),
 
                           // EMAIL
                           const FieldLabel(text: 'Email Address'),
@@ -132,16 +107,22 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             },
                           ),
 
-                          const Spacer(flex: 1,),
+                          const SizedBox(height: 32),
+
                           // RESET PASSWORD BUTTON
-                          CustomButton(text: 'Send Reset Link', onPressed: Login),
-                          const SizedBox(height: 16),
-                          //  NAVIGATION BACK
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Center(
+                          CustomButton(
+                            text: 'Send Reset Link',
+                            onPressed: Login,
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          // NAVIGATION BACK
+                          Center(
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                               child: const Text(
                                 'Back to Login',
                                 style: TextStyle(
@@ -162,7 +143,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           },
         ),
       ),
-    );;
+    );
   }
 
   void Login() {}
