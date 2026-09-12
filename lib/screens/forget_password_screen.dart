@@ -1,5 +1,5 @@
+import 'package:expense_tracker/screens/verify_email_screen.dart';
 import 'package:flutter/material.dart';
-
 import '../constants/color.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
@@ -13,7 +13,28 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
+
+
+  bool isLoading = false;
+
+  Future<void> sendResetLink() async {
+    FocusScope.of(context).unfocus();
+
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>VerifyEmailScreen(email: 'email')));
+
+
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +73,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       ),
                     ),
                     child: Form(
-                      // key: _formKey,
+                      key: _formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,10 +130,16 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
                           const SizedBox(height: 32),
 
-                          // RESET PASSWORD BUTTON
-                          CustomButton(
+                          // RESET PASSWORD BUTTON / LOADING
+                          isLoading
+                              ? const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColor.primary,
+                            ),
+                          )
+                              : CustomButton(
                             text: 'Send Reset Link',
-                            onPressed: Login,
+                            onPressed: sendResetLink,
                           ),
 
                           const SizedBox(height: 12),
@@ -145,6 +172,4 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       ),
     );
   }
-
-  void Login() {}
 }

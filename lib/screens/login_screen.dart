@@ -3,6 +3,7 @@ import 'package:expense_tracker/screens/forget_password_screen.dart';
 import 'package:expense_tracker/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
+
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/field_label.dart';
@@ -21,13 +22,17 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   bool obscurePassword = true;
+  bool isLoading = false;
 
-  void Login() {
+
+  Future<void> Login() async{
     FocusScope.of(context).unfocus();
 
     if (!_formKey.currentState!.validate()) {
       return;
+
     }
+
 
     debugPrint('Email: ${emailController.text}');
     debugPrint('Password: ${passwordController.text}');
@@ -39,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
