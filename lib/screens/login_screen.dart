@@ -1,3 +1,4 @@
+import 'package:expense_tracker/screens/forget_password_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/color.dart';
@@ -186,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                      const RegisterScreen(),
+                                      const ForgetPasswordScreen(),
                                     ),
                                   );
                                 },
