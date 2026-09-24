@@ -10,3 +10,8 @@ class AppColor {
   static const Color requiredStar = Color(0xFFE1595B);
   static const Color white = Colors.white;
 }
+
+class AppColors {
+  static const Color brand1 = Color(0xFF12192B);
+  static const Color brand2 = Color(0xFF12192B);
+}

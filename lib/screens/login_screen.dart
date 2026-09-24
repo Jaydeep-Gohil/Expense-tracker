@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Top spacing
-                          const SizedBox(height: 150),
+                          const SizedBox(height: 120),
 
                           // TITLE
                           const Text(
@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
 
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 8),
 
                           // SUBTITLE
                           const Text(
@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
 
-                          const SizedBox(height: 38),
+                          const SizedBox(height: 75),
 
                           // EMAIL FIELD
                           const FieldLabel(text: 'Email', isRequired: true),
@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           const SizedBox(height: 16),
 
-                          // REMEMBER ME & FORGOT PASSWORD ROW
+                          // REMEMBER ME & FORGOT PASSWORD
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -203,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
 
-                          const SizedBox(height: 36),
+                          const SizedBox(height: 75),
 
                           // SIGN IN BUTTON
                           CustomButton(

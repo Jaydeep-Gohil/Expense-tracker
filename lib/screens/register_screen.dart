@@ -1,3 +1,4 @@
+import 'package:expense_tracker/screens/verify_email_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants/color.dart';
@@ -38,9 +39,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
+        builder: (context) => const VerifyEmailScreen(email: 'shree.ram@example.com'),
       ),
     );
+
   }
 
   @override
@@ -50,7 +52,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     passwordController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +73,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Generous spacing at top as seen in design image
-                          const SizedBox(height: 150),
+                          //  Top spacing
+                          const SizedBox(height: 120),
 
                           // TITLE
                           const Text(
@@ -86,7 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
 
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 8),
 
                           // SUBTITLE
                           const Text(
@@ -98,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
 
-                          const SizedBox(height: 38),
+                          const SizedBox(height: 75),
 
                           // FULL NAME
                           const FieldLabel(text: 'Full Name', isRequired: true),
@@ -160,7 +161,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           ),
 
-                          const SizedBox(height: 36),
+                          const SizedBox(height: 75),
 
                           // CREATE ACCOUNT BUTTON
                           CustomButton(

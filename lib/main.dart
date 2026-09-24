@@ -1,5 +1,5 @@
 import 'package:expense_tracker/screens/login_screen.dart';
-import 'package:expense_tracker/screens/register_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
