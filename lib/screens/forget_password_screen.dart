@@ -42,7 +42,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColor.white,
+      backgroundColor: Gray_palette.gray1,
       body: SafeArea(
         bottom: false,
         child: CustomScrollView(
@@ -70,7 +70,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w800,
-                              color: Color(0xFF111827),
+                              color: Gray_palette.gray12,
                               letterSpacing: -0.5,
                             ),
                           ),
@@ -82,7 +82,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             "No worries! Enter your email address and\nwe'll send you a link to reset your password.",
                             style: TextStyle(
                               fontSize: 13,
-                              color: AppColor.secondary,
+                              color: Gray_palette.gray10,
                               height: 1.45,
                             ),
                           ),
@@ -132,7 +132,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
-                                  color: AppColor.accent,
+                                  color: BrandColor.brand5,
                                 ),
                               ),
                             ),

@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColor.white,
+      backgroundColor: Gray_palette.gray1,
       body: SafeArea(
         bottom: false,
         child: CustomScrollView(
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w800,
-                              color: Color(0xFF111827),
+                              color: Gray_palette.gray12,
                               letterSpacing: -0.5,
                             ),
                           ),
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'Sign in to your account to continue.',
                             style: TextStyle(
                               fontSize: 14,
-                              color: AppColor.secondary,
+                              color: Gray_palette.gray10,
                             ),
                           ),
 
@@ -176,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       'Remember Me',
                                       style: TextStyle(
                                         fontSize: 13,
-                                        color: AppColor.primary,
+                                        color: Gray_palette.gray10,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -197,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   'Forgot Password?',
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: AppColor.accent,
+                                    color: BrandColor.brand5,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -224,7 +224,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   "Don't have an account? ",
                                   style: TextStyle(
                                     fontSize: 13,
-                                    color: AppColor.secondary,
+                                    color: Gray_palette.gray10,
                                   ),
                                 ),
                                 GestureDetector(
@@ -242,7 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w600,
-                                      color: AppColor.accent,
+                                      color: BrandColor.brand5,
                                     ),
                                   ),
                                 ),
